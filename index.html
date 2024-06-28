@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.slim.min.js" integrity="sha256-kmHvs0B+OpCW5GVHUNjv9rOmY0IvSIRcf7zGUDTDQM8=" crossorigin="anonymous"></script>
+    <title>Nasty Number One</title>
+  </head>
+  <body>
+    <div id="app" style="margin-bottom: 3rem;" class="flex flex-col items-center">
+      <div style="font-size: 3.5em; margin-bottom: 4rem; color: azure;">Nasty Number <span class="gradient">One</span></div>
+      <div style="font-size: 2em; margin-bottom: 1rem;">Score</div>
+      <div style="margin-bottom: 5rem;" style="font-size: 1,5em;" class="flex flex-row space-x-16 items-center">
+        <div class="rundung border flex flex-col space-y-5 p-8">
+          <div style="font-weight: bold; margin-bottom: 1rem;">Spieler 1</div>
+          <div class="flex flex-row space-x-40">
+            <div class="flex flex-col space-y-8">
+              <div>Aktuell</div>
+              <div>Insgesamt</div>
+            </div>
+            <div class="flex flex-col space-y-8">
+              <div id="aktuell1">0</div>
+              <div id="insgesamt1">0</div>
+            </div>
+          </div>
+        </div>
+        <div class="rundung border flex flex-col p-5">
+          <div style="font-weight: bold; padding-bottom: 1.5rem;">Aktueller Spieler</div>
+          <div style="font-size: 3.5rem; padding-bottom: 1rem;" class="gradient" id="aktuellerSpieler">1</div>
+        </div>
+        <div class="rundung border flex flex-col space-y-5 p-8">
+          <div style="font-weight: bold; margin-bottom: 1rem;">Spieler 2</div>
+          <div class="flex flex-row space-x-40">
+            <div class="flex flex-col space-y-8">
+              <div>Aktuell</div>
+              <div>Insgesamt</div>
+            </div>
+            <div class="flex flex-col space-y-8">
+              <div id="aktuell2">0</div>
+              <div id="insgesamt2">0</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="flex flex-row space-x-56 items-center">
+        <div id="symbol" style="font-size: 8em;" class="pr-25">⚀</div>
+        <div class="flex flex-row space-x-8 m-auto">
+          <button onclick="wuerfeln()" class="p-16">Würfeln🎲</button>
+          <button onclick="sichern()" class="p-16">Sichern🔒</button>
+        </div>
+      </div>
+    </div>
+    <script type="module" src="/main.js"></script>
+    <script>
+      spieler1_aktuell = 0
+      spieler2_aktuell = 0
+      spieler1_insgesamt = 0
+      spieler2_insgesamt = 0
+      aktuellerSpieler = 1
+
+      function wuerfeln() {
+        const zufallsZahl = Math.floor(Math.random() * 6) + 1;
+
+        wuerfelsymbole = ["⚀", "⚁", "⚂", "⚃", "⚄", "⚅"];
+
+        symbol = wuerfelsymbole[zufallsZahl - 1];
+
+        $("#symbol").html(symbol);
+
+        if (zufallsZahl === 1) {
+
+           if (aktuellerSpieler === 1) {
+
+              spieler1_aktuell = 0;
+              aktuellerSpieler = 2;
+
+           } else if (aktuellerSpieler === 2) {
+
+              spieler2_aktuell = 0;
+              aktuellerSpieler = 1;
+
+           }
+
+        } else {
+
+          if (aktuellerSpieler === 1) {
+
+          spieler1_aktuell += zufallsZahl;
+
+          } else {
+
+          spieler2_aktuell += zufallsZahl;
+
+          }
+        }
+
+        rendern();
+
+    }
+
+      function sichern() {
+
+        if (aktuellerSpieler === 1) {
+
+          spieler1_insgesamt += spieler1_aktuell
+
+        } else {
+
+          spieler2_insgesamt += spieler2_aktuell
+
+        }
+
+        spieler1_aktuell = 0
+
+        spieler2_aktuell = 0
+
+        aktuellerSpieler = 3 - aktuellerSpieler;
+
+        rendern();
+
+      }
+        function rendern() {
+
+        $("#aktuellerSpieler").html(aktuellerSpieler);
+
+        $("#aktuell1").html(spieler1_aktuell);
+
+        $("#aktuell2").html(spieler2_aktuell);
+
+        $("#insgesamt1").html(spieler1_insgesamt);
+
+        $("#insgesamt2").html(spieler2_insgesamt);
+
+      }
+    </script>
+  </body>
+</html>

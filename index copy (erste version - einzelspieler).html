@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.slim.min.js" integrity="sha256-kmHvs0B+OpCW5GVHUNjv9rOmY0IvSIRcf7zGUDTDQM8=" crossorigin="anonymous"></script>
+    <title>Nasty Number One</title>
+  </head>
+  <body>
+    <div id="app" class="flex flex-col items-center">
+      <div style="font-size: 3.5em; margin-bottom: 3rem; color: azure;">Nasty Number <span class="gradient">One</span></div>
+      <div style="font-size: 2em; margin-bottom: 1rem;">Score</div>
+      <div style="margin-bottom: 5rem;" style="font-size: 1,5em;" class="rundung border p-8 flex flex-row space-x-56 items-center">
+        <div class="flex flex-col space-y-5">
+          <div>Aktuell</div>
+          <div>Insgesamt</div>
+        </div>
+        <div class="flex flex-col space-y-5">
+          <div id="aktuell">0</div>
+          <div id="insgesamt">0</div>
+        </div>
+      </div>
+      <div class="flex flex-row space-x-56 items-center">
+        <div id="symbol" style="font-size: 8em;" class="pr-25">⚀</div>
+        <div class="flex flex-col space-y-8 m-auto">
+          <button onclick="wuerfeln()" class="p-16">Würfeln🎲</button>
+          <button onclick="sichern()" class="p-16">Sichern🔒</button>
+        </div>
+      </div>
+    </div>
+    <script type="module" src="/main.js"></script>
+    <script>
+      aktuell = 0
+      insgesamt = 0
+
+      function wuerfeln() {
+        const zufallsZahl = Math.floor(Math.random() * 6) + 1;
+
+        wuerfelsymbole = ["⚀", "⚁", "⚂", "⚃", "⚄", "⚅"];
+
+        symbol = wuerfelsymbole[zufallsZahl - 1];
+
+        $("#symbol").html(symbol);
+
+          if (1 === zufallsZahl) {
+                aktuell = 0;
+            } else {
+              aktuell += zufallsZahl
+            }        
+
+            $("#aktuell").html(aktuell);
+      }
+
+      function sichern() {
+
+        insgesamt += aktuell
+        $("#insgesamt").html(insgesamt);
+        aktuell = 0
+        $("#aktuell").html(aktuell);
+
+      }
+    </script>
+  </body>
+</html>
